@@ -216,7 +216,7 @@ export default function DaftarPage() {
           {/* Step 1: Data Diri */}
           {step === 1 && (
             <div className="p-6 space-y-5">
-              <SectionHeader icon={<User className="w-5 h-5 text-blue-500" />} title="Identitas Pengunjung" desc="Pastikan NIK terdaftar dan data sesuai kartu tanda penduduk" />
+              <SectionHeader icon={<User className="w-5 h-5 text-blue-500" />} title="Identitas Pengunjung" desc="Pastikan NIK dan data sesuai kartu tanda penduduk" />
 
               <FormField label="Nomor Induk Kependudukan (NIK)" required hint={`${form.nik.length}/16 Digit`} error={errors.nik}>
                 <div className="relative">
@@ -230,9 +230,6 @@ export default function DaftarPage() {
                     className={inputClass(errors.nik)}
                   />
                 </div>
-                <p className="text-xs text-gray-400 mt-1">
-                  ⓘ NIK digunakan untuk mencocokkan data objek pajak daerah (PBB-P2 / BPHTB).
-                </p>
               </FormField>
 
               <FormField label="Nama Lengkap Pemohon" required error={errors.full_name}>
