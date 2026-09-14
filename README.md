@@ -159,7 +159,8 @@ Entitas utama yang perlu ada pada basis data:
 - [ ] Manajemen akun petugas dari Panel Admin (saat ini belum ada menu terpisah)\
 - [ ] Survei kepuasan masyarakat (SKM) setelah status Selesai
 - [ ] Laporan lanjutan: rata-rata waktu tunggu, jam sibuk, tingkat kadaluarsa/no-show
-
+- [ ] Integrasi dengan perangkat IoT (mesin cetak nomor otomatis, sensor kehadiran, layar display fisik)
+- [ ] API terpisah secara independen (headless/backend service tersendiri untuk skalabilitas dan bisa dikonsumsi aplikasi lain)
 ---
 
 ## Struktur Folder Dokumentasi
