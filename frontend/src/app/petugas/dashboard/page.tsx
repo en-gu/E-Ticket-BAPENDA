@@ -310,15 +310,15 @@ export default function PetugasDashboardPage() {
                   <h2 className="font-bold text-gray-800">Daftar Antrean</h2>
                   <p className="text-xs text-gray-400 mt-0.5">Operasional: Senin – Jumat, 08.00 – 15.00 WIB</p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
                   <input
                     type="date"
                     value={selectedDate}
                     onChange={e => setSelectedDate(e.target.value)}
-                    className="text-xs px-3 py-1.5 rounded-lg border border-gray-200 outline-none focus:border-blue-500"
+                    className="w-full sm:w-auto text-xs px-3 py-1.5 rounded-lg border border-gray-200 outline-none focus:border-blue-500 bg-white"
                   />
-                  <span className="text-xs bg-blue-50 text-blue-600 font-semibold px-2.5 py-1 rounded-full border border-blue-100">
-                    {tickets.length} tiket
+                  <span className="w-full sm:w-auto text-center sm:text-left text-xs bg-blue-50 text-blue-600 font-semibold px-2.5 py-1 rounded-full border border-blue-100">
+                    Total: {tickets.length} Tiket
                   </span>
                 </div>
               </div>

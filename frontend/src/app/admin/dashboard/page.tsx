@@ -402,7 +402,7 @@ export default function AdminDashboardPage() {
               {/* ── Tab: Data Tiket ── */}
               {tab === 'tiket' && (
                 <div className="space-y-4">
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex flex-col md:flex-row gap-3">
                     <div className="relative flex-1">
                       <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
                       <input
@@ -413,25 +413,27 @@ export default function AdminDashboardPage() {
                         className="w-full pl-9 pr-4 py-2 rounded-xl border-2 border-gray-200 focus:border-blue-500 outline-none text-sm transition-colors"
                       />
                     </div>
-                    <input
-                      type="date"
-                      value={filterDate}
-                      onChange={e => { setFilterDate(e.target.value); setTicketPage(1); }}
-                      className="px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-blue-500 outline-none text-sm transition-colors"
-                    />
-                    <select
-                      value={filterStatus}
-                      onChange={e => { setFilterStatus(e.target.value); setTicketPage(1); }}
-                      className="px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-blue-500 outline-none text-sm transition-colors bg-white"
-                    >
-                      {STATUS_OPTIONS.map(o => (
-                        <option key={o.value} value={o.value}>{o.label}</option>
-                      ))}
-                    </select>
+                    <div className="grid grid-cols-2 md:flex gap-3">
+                      <input
+                        type="date"
+                        value={filterDate}
+                        onChange={e => { setFilterDate(e.target.value); setTicketPage(1); }}
+                        className="w-full md:w-auto px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-blue-500 outline-none text-sm transition-colors"
+                      />
+                      <select
+                        value={filterStatus}
+                        onChange={e => { setFilterStatus(e.target.value); setTicketPage(1); }}
+                        className="w-full md:w-auto px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-blue-500 outline-none text-sm transition-colors bg-white"
+                      >
+                        {STATUS_OPTIONS.map(o => (
+                          <option key={o.value} value={o.value}>{o.label}</option>
+                        ))}
+                      </select>
+                    </div>
                     {(searchQuery || filterDate || filterStatus) && (
                       <button
                         onClick={() => { setSearchQuery(''); setFilterDate(''); setFilterStatus(''); setTicketPage(1); fetchTickets(1, '', '', ''); }}
-                        className="px-3 py-2 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 text-sm flex items-center gap-1"
+                        className="w-full md:w-auto px-4 py-2 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 text-sm flex items-center justify-center gap-1 transition-colors"
                       >
                         <X className="w-3.5 h-3.5" /> Reset
                       </button>
@@ -643,16 +645,18 @@ export default function AdminDashboardPage() {
               {/* ── Tab: Laporan ── */}
               {tab === 'laporan' && (
                 <div className="space-y-6">
-                  <div className="flex flex-col sm:flex-row gap-3 items-center justify-between border-b border-gray-100 pb-4">
+                  <div className="flex flex-col md:flex-row gap-3 items-start md:items-center justify-between border-b border-gray-100 pb-4">
                     <h2 className="font-bold text-gray-800 flex items-center gap-2">
                       <BarChart3 className="w-5 h-5 text-blue-600" />
                       Laporan Kunjungan
                     </h2>
-                    <div className="flex gap-2 w-full sm:w-auto">
-                      <input type="date" value={reportFrom} onChange={e => setReportFrom(e.target.value)} className="px-3 py-2 border border-gray-200 rounded-xl text-sm outline-none focus:border-blue-500 bg-white" />
-                      <span className="self-center text-gray-400 font-medium">s/d</span>
-                      <input type="date" value={reportTo} onChange={e => setReportTo(e.target.value)} className="px-3 py-2 border border-gray-200 rounded-xl text-sm outline-none focus:border-blue-500 bg-white" />
-                      <button onClick={fetchReport} className="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm hover:bg-blue-700 font-semibold shadow-sm transition-colors">Terapkan</button>
+                    <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+                      <div className="flex items-center gap-2 w-full sm:w-auto">
+                        <input type="date" value={reportFrom} onChange={e => setReportFrom(e.target.value)} className="w-full sm:w-auto px-3 py-2 border border-gray-200 rounded-xl text-sm outline-none focus:border-blue-500 bg-white" />
+                        <span className="text-gray-400 font-medium">s/d</span>
+                        <input type="date" value={reportTo} onChange={e => setReportTo(e.target.value)} className="w-full sm:w-auto px-3 py-2 border border-gray-200 rounded-xl text-sm outline-none focus:border-blue-500 bg-white" />
+                      </div>
+                      <button onClick={fetchReport} className="w-full sm:w-auto bg-blue-600 text-white px-5 py-2 rounded-xl text-sm hover:bg-blue-700 font-semibold shadow-sm transition-colors">Terapkan</button>
                     </div>
                   </div>
 
