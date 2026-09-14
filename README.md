@@ -156,8 +156,7 @@ Entitas utama yang perlu ada pada basis data:
 
 - [ ] Notifikasi otomatis (WhatsApp/Email) saat tiket terbit dan saat mendekati giliran dipanggil
 - [ ] Dukungan multi-lokasi/cabang kantor pelayanan
-- [ ] Manajemen akun petugas dari Panel Admin (saat ini belum ada menu terpisah)
-- [ ] Jalur prioritas untuk lansia, disabilitas, dan ibu hamil
+- [ ] Manajemen akun petugas dari Panel Admin (saat ini belum ada menu terpisah)\
 - [ ] Survei kepuasan masyarakat (SKM) setelah status Selesai
 - [ ] Laporan lanjutan: rata-rata waktu tunggu, jam sibuk, tingkat kadaluarsa/no-show
 
