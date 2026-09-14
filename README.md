@@ -26,7 +26,7 @@ Sistem terdiri dari tiga sisi aplikasi:
 |---|---|---|
 | **Portal Publik** | Pengunjung / wajib pajak | Daftar tiket antrean, cek/lacak tiket |
 | **Dashboard Petugas** | Petugas loket | Validasi kedatangan, panggil nomor, tandai status layanan |
-| **Panel Admin** | Admin Bapenda | Kelola jenis layanan, sesi & kuota, data tiket, laporan |
+| **Panel Admin** | Admin Bapenda | Kelola jenis layanan, sesi , data tiket, laporan |
 
 ### Arsitektur Sistem
 
@@ -42,7 +42,7 @@ Ketiga sisi aplikasi terhubung ke satu basis data tiket yang sama, sehingga stat
 |---|---|---|
 | **Pengunjung (Wajib Pajak)** | Mendaftar tiket antrean online, menerima e-tiket berisi Kode Tiket, menunjukkan kode tersebut ke petugas saat tiba | Portal publik, tanpa login |
 | **Petugas** | Memvalidasi Kode Tiket, memanggil nomor antrean, menandai status layanan (Sedang Dilayani / Selesai / Lewati) | Dashboard Petugas, login |
-| **Admin** | Mengelola jenis layanan, sesi & kuota, memantau/mengedit data tiket, melihat laporan | Panel Admin, login |
+| **Admin** | Mengelola jenis layanan, sesi , memantau/mengedit data tiket, melihat laporan | Panel Admin, login |
 
 ---
 
@@ -128,7 +128,7 @@ Panel Admin memiliki 4 menu utama:
 |---|---|
 | **Data Tiket** | Melihat seluruh tiket per tanggal (bisa dicari berdasarkan nama/NIK/kode tiket, difilter status), serta mengedit data tiket |
 | **Jenis Layanan** | Menambahkan/mengatur jenis layanan perpajakan (mis. PBB-P2, BPHTB, Konsultasi Pajak Daerah, Pajak Reklame) |
-| **Sesi & Kuota** | Menambahkan sesi layanan (nama sesi, jam mulai, jam selesai) beserta kuotanya |
+| **Sesi** | Menambahkan sesi layanan (nama sesi, jam mulai, jam selesai) |
 | **Laporan** | Melihat Total Tiket Terdaftar berdasarkan filter rentang tanggal |
 
 ---
@@ -147,7 +147,7 @@ Entitas utama yang perlu ada pada basis data:
 
 - **Tiket** — nomor antrean, kode tiket, status, NIK, nama pemohon, no. telepon, email (opsional), jenis layanan, tanggal kunjungan, sesi, waktu daftar, lokasi pelayanan
 - **Jenis Layanan** — nama layanan, deskripsi
-- **Sesi** — nama sesi, jam mulai, jam selesai, kuota
+- **Sesi** — nama sesi, jam mulai, jam selesai, 
 - **Akun Petugas/Admin** — kredensial login, peran (petugas/admin)
 
 ---
