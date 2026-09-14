@@ -539,9 +539,12 @@ export default function DaftarPage() {
               <button
                 type="button"
                 onClick={handleNext}
-                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-xl shadow-sm hover:shadow transition-all"
+                className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 sm:px-6 py-2.5 rounded-xl shadow-sm hover:shadow transition-all"
               >
-                {step === 3 ? 'Lanjut ke Konfirmasi' : `Lanjut ke Tahap ${step + 1}`}
+                <span className="sm:hidden text-sm">Lanjut</span>
+                <span className="hidden sm:inline">
+                  {step === 3 ? 'Lanjut ke Konfirmasi' : `Lanjut ke Tahap ${step + 1}`}
+                </span>
                 <ChevronRight className="w-4 h-4" />
               </button>
             ) : (
@@ -549,12 +552,16 @@ export default function DaftarPage() {
                 type="button"
                 onClick={handleSubmit}
                 disabled={submitting}
-                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-xl shadow-sm disabled:opacity-60 transition-all"
+                className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 sm:px-6 py-2.5 rounded-xl shadow-sm disabled:opacity-60 transition-all"
               >
                 {submitting ? (
-                  <><Loader2 className="w-4 h-4 animate-spin" /> Menyimpan...</>
+                  <><Loader2 className="w-4 h-4 animate-spin" /> <span className="text-sm">Menyimpan...</span></>
                 ) : (
-                  <><FileText className="w-4 h-4" /> Simpan &amp; Dapatkan Tiket</>
+                  <>
+                    <FileText className="w-4 h-4" />
+                    <span className="sm:hidden text-sm">Simpan Tiket</span>
+                    <span className="hidden sm:inline">Simpan &amp; Dapatkan Tiket</span>
+                  </>
                 )}
               </button>
             )}
