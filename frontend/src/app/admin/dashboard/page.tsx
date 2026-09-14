@@ -38,6 +38,7 @@ export default function AdminDashboardPage() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ total: 0, waiting: 0, serving: 0, done: 0 });
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // ── Tiket tab state ──
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -325,74 +326,92 @@ export default function AdminDashboardPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Top Bar (Bapenda Theme) */}
-      <div className="bg-white border-b border-gray-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-sm text-gray-600 font-medium">
-              Pelayanan Tiket Kantor Bapenda Garut
-            </span>
-          </div>
-          <div className="flex items-center gap-1.5 text-blue-600">
-            <BadgeCheck className="w-4 h-4" />
-            <span className="text-xs font-semibold hidden sm:inline">
-              Sistem Resmi Bapenda Kab. Garut
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Header Admin */}
-      <div className="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* ── Sidebar (Sidenav) ── */}
+      {/* Mobile Backdrop */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+      
+      {/* Sidebar Container */}
+      <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-white flex flex-col transform transition-transform duration-300 lg:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} lg:static lg:flex-shrink-0 shadow-xl`}>
+        <div className="px-6 py-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-purple-50 rounded-xl">
-              <ShieldCheck className="w-5 h-5 text-purple-600" />
-            </div>
-            <div>
-              <h1 className="font-bold text-gray-800">Panel Admin</h1>
-              <p className="text-xs text-gray-500">Bapenda Kab. Garut</p>
-            </div>
+            <ShieldCheck className="w-7 h-7 text-blue-500" />
+            <h1 className="font-black text-lg tracking-wide text-white">Panel Admin</h1>
           </div>
-          <div className="flex items-center gap-2">
-            <button onClick={fetchAll} className="p-2 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50">
-              <RefreshCw className="w-4 h-4" />
-            </button>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 text-sm font-medium"
-            >
-              <LogOut className="w-4 h-4" />
-              <span className="hidden sm:inline">Logout</span>
-            </button>
-          </div>
+          <button className="lg:hidden text-slate-400 hover:text-white transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+            <X className="w-5 h-5" />
+          </button>
         </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 py-6 space-y-5">
-
-
-        {/* Tabs */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-          <div className="flex border-b border-gray-100 overflow-x-auto scrollbar-hide">
+        
+        <div className="px-4 py-4">
+          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 px-2">Menu Utama</p>
+          <nav className="space-y-1.5">
             {tabs.map(t => (
               <button
                 key={t.id}
-                onClick={() => setTab(t.id)}
-                className={`flex items-center gap-2 px-5 py-3.5 text-sm font-semibold transition-colors whitespace-nowrap
-                  ${tab === t.id
-                    ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50/50'
-                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'}`}
+                onClick={() => { setTab(t.id); setIsMobileMenuOpen(false); }}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${tab === t.id ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:bg-slate-800 hover:text-slate-100'}`}
               >
                 {t.icon}
                 {t.label}
               </button>
             ))}
-          </div>
+          </nav>
+        </div>
+        
+        <div className="mt-auto p-6">
+           <div className="flex items-center gap-3 text-xs font-semibold text-slate-400 bg-slate-800/50 px-4 py-3 rounded-xl border border-slate-700/50">
+             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
+             Sistem Bapenda Aktif
+           </div>
+        </div>
+      </aside>
 
-          {loading && tab !== 'tiket' && tab !== 'laporan' ? (
+      {/* ── Main Content Area ── */}
+      <main className="flex-1 flex flex-col min-w-0 min-h-screen max-h-screen overflow-y-auto">
+        {/* Topbar */}
+        <header className="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-10 px-4 md:px-8 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <button 
+              className="lg:hidden p-2 -ml-2 rounded-lg text-gray-500 hover:bg-gray-50 transition-colors"
+              onClick={() => setIsMobileMenuOpen(true)}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" /></svg>
+            </button>
+            <div className="hidden sm:flex items-center gap-2">
+              <BadgeCheck className="w-5 h-5 text-blue-600" />
+              <div>
+                <h2 className="text-sm font-bold text-gray-800">Pelayanan Tiket Antrean</h2>
+                <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">Bapenda Kabupaten Garut</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button onClick={fetchAll} className="p-2 sm:px-3 sm:py-2 flex items-center gap-2 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-blue-600 transition-colors text-sm font-semibold" title="Refresh Data">
+              <RefreshCw className="w-4 h-4" />
+              <span className="hidden sm:inline">Refresh</span>
+            </button>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 p-2 sm:px-4 sm:py-2 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 border border-red-100 text-sm font-bold transition-colors"
+            >
+              <LogOut className="w-4 h-4" />
+              <span className="hidden sm:inline">Logout</span>
+            </button>
+          </div>
+        </header>
+
+        {/* Content Wrapper */}
+        <div className="flex-1 p-4 md:p-8">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden min-h-[500px]">
+          
+            {loading && tab !== 'tiket' && tab !== 'laporan' ? (
             <div className="flex items-center justify-center py-16">
               <Loader2 className="w-6 h-6 animate-spin text-blue-500" />
             </div>
@@ -771,6 +790,7 @@ export default function AdminDashboardPage() {
         </div>
 
       </div>
+      </main>
 
       {/* ── Modal Edit Tiket ── */}
       {editingTicket && (
