@@ -200,11 +200,11 @@ export default function DaftarPage() {
                 >
                   {done ? <CheckCircle className="w-5 h-5" /> : s.id}
                 </div>
-                <p className={`text-xs font-semibold hidden sm:block ${active ? 'text-blue-600' : done ? 'text-blue-500' : 'text-gray-400'}`}>
+                <p className={`text-[10px] sm:text-xs font-semibold text-center leading-tight max-w-[70px] sm:max-w-none ${active ? 'text-blue-600' : done ? 'text-blue-500' : 'text-gray-400'}`}>
                   {s.label}
                 </p>
                 {active && (
-                  <p className="text-xs text-blue-400 hidden sm:block">{s.sub}</p>
+                  <p className="text-[9px] sm:text-xs text-blue-400 text-center leading-tight max-w-[70px] sm:max-w-none">{s.sub}</p>
                 )}
               </div>
             );
