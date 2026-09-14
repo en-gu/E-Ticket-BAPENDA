@@ -182,5 +182,3 @@ docs/
     ├── status_siklus.png
     └── usecase.png
 ```
-
-Pastikan folder `docs/screenshots/` dan `docs/diagrams/` ikut di-push ke repository agar seluruh gambar tampil di README GitHub.
