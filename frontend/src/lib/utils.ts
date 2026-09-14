@@ -64,6 +64,7 @@ export function formatCreatedAt(dateStr: string): string {
  */
 export function getRelationLabel(type: RelationType): string {
   const labels: Record<RelationType, string> = {
+    '': '',
     wajib_pajak_sendiri: 'Wajib Pajak Sendiri',
     anggota_keluarga: 'Anggota Keluarga',
     kuasa_notaris_ppat: 'Kuasa / Notaris / PPAT',
