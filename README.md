@@ -10,6 +10,7 @@ Sistem tiket antrean online untuk pelayanan tatap muka di Badan Pendapatan Daera
 - [Alur Validasi & Pelayanan (Petugas)](#alur-validasi--pelayanan-petugas)
 - [Siklus Status Tiket](#siklus-status-tiket)
 - [Panel Admin](#panel-admin)
+- [Diagram Use Case](#diagram-use-case)
 - [Rancangan Data](#rancangan-data)
 - [Roadmap Pengembangan Lanjutan](#roadmap-pengembangan-lanjutan)
 
@@ -27,6 +28,12 @@ Sistem terdiri dari tiga sisi aplikasi:
 | **Dashboard Petugas** | Petugas loket | Validasi kedatangan, panggil nomor, tandai status layanan |
 | **Panel Admin** | Admin Bapenda | Kelola jenis layanan, sesi & kuota, data tiket, laporan |
 
+### Arsitektur Sistem
+
+<img src="docs/diagrams/arsitektur.png" width="650" alt="Arsitektur sistem">
+
+Ketiga sisi aplikasi terhubung ke satu basis data tiket yang sama, sehingga status tiket yang diubah petugas langsung terlihat di Panel Admin, dan sebaliknya.
+
 ---
 
 ## Aktor & Peran
@@ -43,16 +50,15 @@ Sistem terdiri dari tiga sisi aplikasi:
 
 Pengunjung mendaftar melalui portal publik dalam 4 tahap, lalu menerima e-tiket berisi **Kode Tiket** numerik (bukan QR code) yang nantinya ditunjukkan ke petugas.
 
-```mermaid
-flowchart TD
-    A[Portal Antrean Online] -->|klik Daftar Tiket Antrean| B[Tahap 1: Data Diri]
-    A -.->|klik Cek/Lacak Tiket Saya| Z[Cek Status Tiket]
-    B --> C[Tahap 2: Pernyataan]
-    C --> D[Tahap 3: Jadwal & Layanan]
-    D --> E[Tahap 4: Konfirmasi]
-    E --> F[Sistem Terbitkan e-Tiket]
-    F --> G([Status: Aktif])
-```
+<img src="docs/diagrams/alur_pendaftaran.png" width="480" alt="Alur pendaftaran tiket">
+
+### Portal Antrean Online (Beranda)
+
+Halaman utama yang diakses pengunjung. Menampilkan ringkasan 3 langkah pendaftaran (Isi Data Diri, Pilih Waktu & Layanan, Dapatkan QR Tiket), ketentuan kedatangan, serta dua tombol aksi: **Daftar Tiket Antrean** dan **Cek/Lacak Tiket Saya**.
+
+<img src="docs/screenshots/01-portal-beranda.png" width="700" alt="Portal Antrean Online - Beranda">
+
+> **Catatan:** teks "Langkah 3: Dapatkan QR Tiket" pada beranda belum disesuaikan — e-tiket saat ini menggunakan **Kode Tiket** numerik, bukan QR code. Sebaiknya copy ini diperbarui agar tidak membingungkan pengunjung.
 
 ### Tahap 1 — Data Diri
 
@@ -90,19 +96,7 @@ e-Tiket berisi Nomor Antrean, **Kode Tiket** (kode numerik yang harus ditunjukka
 
 Setiap tiket yang berhasil didaftarkan otomatis muncul di **Dashboard Petugas**, pada daftar antrean yang bisa difilter berdasarkan tanggal.
 
-```mermaid
-flowchart TD
-    A[Petugas Login Dashboard] --> B[Pilih Tanggal di Daftar Antrean]
-    B --> C[Lihat Daftar Tiket Berstatus Aktif]
-    C --> D[Buka Detail Tiket]
-    D --> E[Validasi Kode Tiket Pengunjung]
-    E --> F([Status: Menunggu])
-    F --> G{Tekan Panggil Berikutnya}
-    G -->|Pengunjung hadir| H([Status: Sedang Dilayani])
-    H --> I([Status: Selesai])
-    G -->|Tidak hadir - Lewati| J([Status: Kadaluarsa])
-    C -->|Tidak divalidasi sampai jadwal lewat| J
-```
+<img src="docs/diagrams/alur_petugas.png" width="480" alt="Alur validasi dan pelayanan petugas">
 
 Dashboard Petugas menampilkan ringkasan real-time (Total Hari Ini, Menunggu Dipanggil, Sedang Dilayani, Selesai), panel "Sedang Dilayani", panel "Antrean Berikutnya" dengan tombol **Panggil Berikutnya**, serta daftar antrean lengkap per tanggal.
 
@@ -112,17 +106,7 @@ Dashboard Petugas menampilkan ringkasan real-time (Total Hari Ini, Menunggu Dipa
 
 ## Siklus Status Tiket
 
-```mermaid
-stateDiagram-v2
-    [*] --> Aktif: Tiket terbit dari portal publik
-    Aktif --> Menunggu: Petugas memvalidasi Kode Tiket
-    Menunggu --> SedangDilayani: Petugas tekan "Panggil Berikutnya"
-    SedangDilayani --> Selesai: Layanan tuntas
-    Aktif --> Kadaluarsa: Tidak datang sesuai jadwal
-    Menunggu --> Kadaluarsa: Tidak hadir saat dipanggil (Lewati)
-    Selesai --> [*]
-    Kadaluarsa --> [*]
-```
+<img src="docs/diagrams/status_siklus.png" width="750" alt="Siklus status tiket">
 
 | Status | Deskripsi |
 |---|---|
@@ -146,6 +130,14 @@ Panel Admin memiliki 4 menu utama:
 | **Jenis Layanan** | Menambahkan/mengatur jenis layanan perpajakan (mis. PBB-P2, BPHTB, Konsultasi Pajak Daerah, Pajak Reklame) |
 | **Sesi & Kuota** | Menambahkan sesi layanan (nama sesi, jam mulai, jam selesai) beserta kuotanya |
 | **Laporan** | Melihat Total Tiket Terdaftar berdasarkan filter rentang tanggal |
+
+---
+
+## Diagram Use Case
+
+Merangkum fungsi yang bisa dilakukan tiap aktor:
+
+<img src="docs/diagrams/usecase.png" width="500" alt="Diagram use case">
 
 ---
 
@@ -175,15 +167,21 @@ Entitas utama yang perlu ada pada basis data:
 
 ```
 docs/
-└── screenshots/
-    ├── 01-portal-beranda.png
-    ├── 02-form-tahap1-data-diri.png
-    ├── 03-form-tahap2-pernyataan.png
-    ├── 04-form-tahap3-jadwal-layanan.png
-    ├── 05-form-tahap4-konfirmasi.png
-    ├── 06-e-tiket.png
-    ├── 07-dashboard-petugas.png
-    └── 08-panel-admin.png
+├── screenshots/
+│   ├── 01-portal-beranda.png
+│   ├── 02-form-tahap1-data-diri.png
+│   ├── 03-form-tahap2-pernyataan.png
+│   ├── 04-form-tahap3-jadwal-layanan.png
+│   ├── 05-form-tahap4-konfirmasi.png
+│   ├── 06-e-tiket.png
+│   ├── 07-dashboard-petugas.png
+│   └── 08-panel-admin.png
+└── diagrams/
+    ├── arsitektur.png
+    ├── alur_pendaftaran.png
+    ├── alur_petugas.png
+    ├── status_siklus.png
+    └── usecase.png
 ```
 
-Pastikan folder `docs/screenshots/` ini ikut di-push ke repository agar gambar tampil di README GitHub.
+Pastikan folder `docs/screenshots/` dan `docs/diagrams/` ikut di-push ke repository agar seluruh gambar tampil di README GitHub.
