@@ -8,7 +8,7 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
   try {
     const { id } = await params;
     const body = await req.json();
-    const allowed = ['name', 'code', 'description', 'requirements', 'is_active'];
+    const allowed = ['name', 'code', 'description', 'is_active'];
     const payload: Record<string, unknown> = {};
     for (const k of allowed) if (body[k] !== undefined) payload[k] = body[k];
     if (payload.code) payload.code = (payload.code as string).toUpperCase();
@@ -17,6 +17,7 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
     if (error) throw error;
     return NextResponse.json({ success: true, data, message: 'Layanan berhasil diperbarui' });
   } catch (err) {
+    console.error('Update service error:', err);
     return NextResponse.json({ success: false, message: 'Gagal memperbarui layanan' }, { status: 500 });
   }
 }

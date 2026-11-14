@@ -5,7 +5,7 @@ export interface Service {
   name: string;
   code: string;
   description: string;
-  requirements: string[];
+  requirements?: string[];
   is_active: boolean;
   created_at: string;
 }
